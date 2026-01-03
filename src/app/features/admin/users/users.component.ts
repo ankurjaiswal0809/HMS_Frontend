@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangeDetectorRef } from '@angular/core';
 
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,7 +9,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../../../core/services/user.service';
 import { User } from '../../../core/models/user.model';
 
@@ -23,7 +25,8 @@ import { User } from '../../../core/models/user.model';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    MatSnackBarModule
   ],
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
@@ -40,6 +43,9 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private snackBar: MatSnackBar,
+    private cdr: ChangeDetectorRef,
+    
     private fb: FormBuilder
   ) {}
 
@@ -56,24 +62,55 @@ export class UsersComponent implements OnInit {
 
   loadUsers(): void {
     this.userService.getAll().subscribe({
-      next: users => this.users = users
+      next: users => { this.users = users;
+              this.cdr.detectChanges();
+                  },
+
     });
   }
 
-  submit(): void {
-    console.log('🔥 Submit clicked', this.form.value);
-    if (this.form.invalid) return;
+submit(): void {
+  console.log('🔥 Submit clicked', this.form.value);
+  if (this.form.invalid) return;
 
-    if (this.editingUserId !== null) {
-      this.userService
-        .updateStatus(this.editingUserId, this.form.value.enabled)
-        .subscribe(() => this.afterSave());
-    } else {
-      this.userService
-        .create(this.form.value)
-        .subscribe(() => this.afterSave());
-    }
+  if (this.editingUserId !== null) {
+    this.userService
+      .updateStatus(this.editingUserId, this.form.value.enabled)
+      .subscribe({
+        next: () => {
+          this.snackBar.open('User updated successfully ✅', 'Close',
+            { duration: 3000 }
+          );
+          this.afterSave();
+        },
+        error: () => {
+          this.snackBar.open('Failed to update user ❌', 'Close',
+            { duration: 3000 });
+        }
+      });
+  } else {
+    this.userService
+      .create(this.form.value)
+      .subscribe({
+        next: () => {
+          this.snackBar.open(
+            'User created successfully ✅',
+            'Close',
+            { duration: 3000 }
+          );
+          this.afterSave();
+        },
+        error: () => {
+          this.snackBar.open(
+            'Failed to create user ❌',
+            'Close',
+            { duration: 3000 }
+          );
+        }
+      });
   }
+}
+
 
   edit(user: User): void {
     if (user.id == null) return;
