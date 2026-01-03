@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangeDetectorRef } from '@angular/core';
 
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -43,6 +44,7 @@ export class UsersComponent implements OnInit {
   constructor(
     private userService: UserService,
     private snackBar: MatSnackBar,
+    private cdr: ChangeDetectorRef,
     
     private fb: FormBuilder
   ) {}
@@ -60,7 +62,10 @@ export class UsersComponent implements OnInit {
 
   loadUsers(): void {
     this.userService.getAll().subscribe({
-      next: users => this.users = users
+      next: users => { this.users = users;
+              this.cdr.detectChanges();
+                  },
+
     });
   }
 
