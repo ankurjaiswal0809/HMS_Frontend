@@ -1,0 +1,36 @@
+<button mat-raised-button color="primary" (click)="add()">Add Medicine</button>
+<button mat-raised-button color="accent" (click)="sell()">Sell Medicine</button>
+
+<table mat-table [dataSource]="medicines">
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let m">{{ m.name }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef>Price</th>
+    <td mat-cell *matCellDef="let m">{{ m.price }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="quantity">
+    <th mat-header-cell *matHeaderCellDef>Stock</th>
+    <td mat-cell *matCellDef="let m">{{ m.quantity }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="expiryDate">
+    <th mat-header-cell *matHeaderCellDef>Expiry</th>
+    <td mat-cell *matCellDef="let m">{{ m.expiryDate }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <td mat-cell *matCellDef="let m">
+      <button mat-button (click)="edit(m.id!)">Edit</button>
+      <button mat-button color="warn" (click)="delete(m.id!)">Delete</button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columns"></tr>
+  <tr mat-row *matRowDef="let row; columns: columns"></tr>
+
+</table>

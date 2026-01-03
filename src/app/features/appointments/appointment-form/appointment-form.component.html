@@ -1,0 +1,39 @@
+<form [formGroup]="form" (ngSubmit)="save()">
+
+  <mat-form-field appearance="outline">
+    <mat-label>Patient</mat-label>
+    <mat-select formControlName="patientId">
+      <mat-option *ngFor="let p of patients" [value]="p.id">
+        {{ p.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Doctor</mat-label>
+    <mat-select formControlName="doctorId">
+      <mat-option *ngFor="let d of doctors" [value]="d.id">
+        {{ d.name }} ({{ d.specialization }})
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Date & Time</mat-label>
+    <input matInput type="datetime-local" formControlName="appointmentTime">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status">
+      <mat-option *ngFor="let s of statuses" [value]="s">
+        {{ s }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary">
+    Save Appointment
+  </button>
+
+</form>

@@ -1,0 +1,28 @@
+<h2>Patient Discharge</h2>
+
+<form [formGroup]="form" (ngSubmit)="discharge()">
+
+  <mat-form-field appearance="outline">
+    <mat-label>Patient</mat-label>
+    <mat-select formControlName="patientId">
+      <mat-option *ngFor="let p of patients" [value]="p.id">
+        {{ p.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Diagnosis</mat-label>
+    <textarea matInput formControlName="diagnosis"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Treatment Summary</mat-label>
+    <textarea matInput formControlName="treatmentSummary"></textarea>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary">
+    Discharge Patient
+  </button>
+
+</form>
