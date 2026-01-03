@@ -25,3 +25,14 @@
   margin-bottom: 12px;
   text-align: center;
 }
+
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+}
+
+mat-progress-spinner {
+  margin: 0 auto;
+}
