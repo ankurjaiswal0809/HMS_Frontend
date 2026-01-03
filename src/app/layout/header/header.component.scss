@@ -1,0 +1,14 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.spacer {
+  flex: 1;
+}
