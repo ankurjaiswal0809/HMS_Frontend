@@ -1,0 +1,20 @@
+.user-form {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.table-card {
+  margin-top: 20px;
+}
+
+table {
+  width: 100%;
+}

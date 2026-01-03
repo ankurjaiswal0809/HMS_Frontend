@@ -1,0 +1,22 @@
+<aside class="sidebar" [class.collapsed]="collapsed">
+
+  <div class="toggle">
+    <button (click)="toggle()">
+      <mat-icon>{{ collapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+    </button>
+  </div>
+
+  <ul>
+    <li *ngFor="let item of menu"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: false }">
+
+      <a [routerLink]="item.route">
+        <mat-icon>{{ item.icon }}</mat-icon>
+        <span *ngIf="!collapsed">{{ item.label }}</span>
+      </a>
+
+    </li>
+  </ul>
+
+</aside>

@@ -1,0 +1,24 @@
+<h2>Send Email</h2>
+
+<form [formGroup]="form" (ngSubmit)="send()">
+
+  <mat-form-field appearance="outline">
+    <mat-label>To</mat-label>
+    <input matInput formControlName="to" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Subject</mat-label>
+    <input matInput formControlName="subject" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Message</mat-label>
+    <textarea matInput rows="4" formControlName="message"></textarea>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary">
+    Send Email
+  </button>
+
+</form>

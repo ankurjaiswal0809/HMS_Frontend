@@ -1,0 +1,90 @@
+<div class="dashboard" *ngIf="isBrowser">
+
+  <!-- ================= KPI CARDS ================= -->
+
+  <div class="kpi-grid">
+
+    <div class="card">
+      <h3>Patients</h3>
+      <p>{{ stats.patients }}</p>
+    </div>
+
+    <div class="card" *ngIf="isAdmin()">
+      <h3>Doctors</h3>
+      <p>{{ stats.doctors }}</p>
+    </div>
+
+    <div class="card">
+      <h3>Today Appointments</h3>
+      <p>{{ stats.appointments }}</p>
+    </div>
+
+    <div class="card" *ngIf="isAdmin()">
+      <h3>Revenue</h3>
+      <p>₹ {{ stats.revenue }}</p>
+    </div>
+
+  </div>
+
+  <!-- ================= ADMIN CHARTS ONLY ================= -->
+
+  <div class="charts" *ngIf="isAdmin()">
+
+    <div class="chart-card">
+      <h3>Appointments Overview</h3>
+      <canvas
+        baseChart
+        [data]="appointmentChart"
+        [type]="'bar'">
+      </canvas>
+    </div>
+
+    <div class="chart-card">
+      <h3>Revenue Trend</h3>
+      <canvas
+        baseChart
+        [data]="revenueChart"
+        [type]="'line'">
+      </canvas>
+    </div>
+
+  </div>
+
+  <!-- ================= DOCTOR DASHBOARD ================= -->
+
+  <div *ngIf="isDoctor()" class="role-box">
+    <h3>Doctor Dashboard</h3>
+    <p>You can view and manage your appointments.</p>
+  </div>
+
+  <!-- ================= STAFF DASHBOARD ================= -->
+
+  <div *ngIf="isStaff()" class="role-box">
+    <h3>Staff Dashboard</h3>
+    <p>Manage patients, pharmacy, and billing.</p>
+  </div>
+
+</div>
+
+
+ <div class="chart-card">
+    <h3>Monthly Appointments</h3>
+    <canvas baseChart
+      [data]="monthlyAppointmentsChart"
+      chartType="bar">
+    </canvas>
+  </div>
+
+  <div class="chart-card">
+    <h3>Monthly Revenue</h3>
+    <canvas baseChart
+      [data]="monthlyRevenueChart"
+      chartType="line">
+    </canvas>
+  </div>
+
+<!-- ================= LOADING STATE ================= -->
+
+<div *ngIf="!isBrowser" class="loading">
+  Loading dashboard...
+</div>
